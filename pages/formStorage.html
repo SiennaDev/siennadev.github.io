@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Sienna - Storage Form</title>
+		<link rel="stylesheet" href="../style/style.css">
+		<link rel="icon" type="image/png" href="../img/logo.ico"/>
+		<link rel = "schema.DC" href = "http://purl.org/DC/elements/1.0/">
+		<meta name = "DC.Title" content = "Sienna">
+		<meta name = "DC.Creator" content = "Hadrien PARIS">
+		<meta name = "DC.Type" content = "blog">
+		<meta name = "DC.Date" content = "2021">
+		<meta name = "DC.Format" content = "text/html">
+		<meta name = "DC.Language" content = "en">
+		<style>
+			@font-face
+			{
+				font-family: 'Quicksand';
+				src: url('../fonts/Quicksand_Light.otf');
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="haut">
+			<h1 id="title">SIENNA</h1>
+			<p class="page">
+				<a href="recovery.html">DATA RECOVERY</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="pricings.html">DATA STORAGE SOLUTIONS</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="about.html">ABOUT</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="../admin/index.html">LOGIN</a>
+			</p>
+		</div>
+		<div>
+			<p class="form_p">
+				Once completed, this form will be sent to our technical team. Please fill all those fields in order to have your data stored and protected as soon as possible.
+				Our warehouse adress will be in the confirmation email, you will have to send us your device in a ESD-protected package. We'll do a data backup on our servers, and we'll send back your device to your adress.
+				This process can take up to a week. Your data backup will be stored afterwards.
+			</p>
+		</div>
+
+		<div class="form-example">
+			<form method="get">
+
+				<div class="form-example">
+					<label>Company name (for businesses): </label>
+					<input type="text" placeholder="Company name" id="company_name">
+				</div>
+
+				<div class="form-example">
+					<label>Name: </label>
+					<input type="text" placeholder="Name" id="name" required>
+				</div>
+
+				<div class="form-example">
+					<label>Adress: </label>
+					<input type="text" placeholder="Adress" id="adress" required>
+				</div>
+
+				<div class="form-example">
+					<label>Email address: </label>
+					<input type="email" placeholder="Email adress" id="email" required>
+				</div>
+
+				<div class="form-example">
+					<label>Data amount (in Tb)</label>
+					<input type="number" id="amount" placeholder="Data amount" min="1" max="16">
+				</div>
+
+				<div class="form-example">
+					<label>Archiving time </label>
+					<select id="archiving_time">
+						<option value="1">1 year - 30€ per Tb </option>
+						<option value="2">2 years - 50€ per Tb </option>
+						<option value="5">5 years - 125€ per Tb </option>
+						<option value="10">10 years - 250€ per Tb </option>
+						<option value="15">15 years - 275€ per Tb</option>
+						<option value="20">20 years - 300€ per Tb</option>
+						<option value="25">25 years - 500€ per Tb</option>
+						<option value="30">30 years - 550€ per Tb</option>
+						<option value="40">40 years - 600€ per Tb</option>
+						<option value="50">50 years - 1000€ per Tb</option>
+						<option value="75">75 years - 1500€ per Tb</option>
+					</select>
+				</div>
+
+				<div class="form-example">
+					<label>Country of residence: </label>
+					<select id="country_list">
+						<option value="France">France</option>
+						<option value="United-Kingdom">United-Kingdom</option>
+						<option value="Germany">Germany</option>
+						<option value="Spain">Spain</option>
+					</select>
+				</div>
+
+				<div class="form-submit">
+					<input class="button_form" type="submit" value="Submit" onclick="saveFile()">
+				</div>
+			</form>
+			<div id="server_div">
+				<img id="server_img" src="../img/server.jpg" alt="A storage server rack">
+			</div>
+		</div>
+
+
+		<script>
+			let saveFile = () => {
+				const company_name = document.getElementById("company_name");
+				const name = document.getElementById("name");
+				const adress = document.getElementById("adress");
+				const email = document.getElementById("email");
+				const country = document.getElementById("country_list")
+				const archiving = document.getElementById("archiving_time");
+				const amount = document.getElementById("amount");
+				const random_id = "Storage" + '-' + Math.floor(Math.random() * 999) + '-' + Math.floor(Math.random() * 99999);
+				const form_id = "2021" + '-' + Math.floor(Math.random() * 9999) + '-' + Math.floor(Math.random() * 9999) + '-' + Math.floor(Math.random() * 9999);
+				let data ='Form ID: ' + random_id + '\n' +'Order ID: ' + form_id + '\n' +'Company Name: ' + company_name.value + '\n' +'Name: ' + name.value + '\n' +'Adress: ' + adress.value + '\n' + 'Email adress: ' + email.value + '\n' + 'Country: ' + country.value + '\n' +'Archiving time: ' + archiving.value + ' years' + '\n' +'Data amount: ' + amount.value + ' Tb';
+				const textToBLOB = new Blob([data], {
+					 type: 'text/plain'
+				});
+				const sFileName = 'StorageForm.txt';
+				let newLink = document.createElement("a");
+				newLink.download = sFileName;
+				if (window.webkitURL != null) {
+					newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+				}
+				else {
+					newLink.href = window.URL.createObjectURL(textToBLOB);
+					newLink.style.display = "none";
+					document.body.appendChild(newLink);
+				}
+				newLink.click();
+				//window.open('btc_checkout.html');
+			}
+		</script>
+
+
+		<footer class="footer">
+			<ul>
+				<li><a href="../index.html">Home</a></li>
+			</ul>
+			<ul>
+				<li><a href="https://harfang.net">Harfang</a></li>
+			</ul>
+			<ul>
+				<li><a href="https://github.com/HadPhazz">Github</a></li>
+			</ul>
+			<ul>
+				<li><a href="mailto:Hadrien.paris@icloud.com">Contact</a></li>
+			</ul>
+		</footer>
+	</body>
+</html>

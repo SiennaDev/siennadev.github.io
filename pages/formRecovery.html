@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Sienna - Recovery Form</title>
+		<link rel="stylesheet" href="../style/style.css">
+		<link rel="icon" type="image/png" href="../img/logo.ico"/>
+		<link rel = "schema.DC" href = "http://purl.org/DC/elements/1.0/">
+		<meta name = "DC.Title" content = "Sienna">
+		<meta name = "DC.Creator" content = "Hadrien PARIS">
+		<meta name = "DC.Type" content = "blog">
+		<meta name = "DC.Date" content = "2021">
+		<meta name = "DC.Format" content = "text/html">
+		<meta name = "DC.Language" content = "en">
+		<style>
+			@font-face
+			{
+				font-family: 'Quicksand';
+				src: url('../fonts/Quicksand_Light.otf');
+			}
+		</style>
+	</head>
+	<body>
+		<div id="haut">
+			<h1 id="title">SIENNA</h1>
+			<p class="page">
+				<a href="recovery.html">DATA RECOVERY</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="pricings.html">DATA STORAGE SOLUTIONS</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="about.html">ABOUT</a>
+			</p>
+			<p class="page">
+				/
+			</p>
+			<p class="page">
+				<a href="../admin/index.html">LOGIN</a>
+			</p>
+		</div>
+		<div>
+			<p class="form_p">
+				Once completed, this form will be sent to our technical team. Please fill all those fields in order to have your data recover in the best delays.Our warehouse adress will be in the confirmation email, you will have to send us your device in a ESD-protected package.
+			</p>
+		</div>
+		<div class="form-example">
+			<form method="post">
+				<div class="form-example">
+					<label>Company name (for businesses): </label>
+					<input type="text" placeholder="Company name" id="company_name">
+				</div>
+				<div class="form-example">
+					<label>Name: </label>
+					<input type="text" placeholder="Name" id="name" required>
+				</div>
+				<div class="form-example">
+					<label>Address: </label>
+					<input type="text" placeholder="Address" id="adress" required>
+				</div>
+				<div class="form-example">
+					<label>Email address: </label>
+					<input type="email" placeholder="Email address" id="email" required>
+				</div>
+				<div class="form-example">
+					<label>Device type: </label>
+					<select id="devices">
+						<option value="Hard-Drive Disk">Hard-Drive Disk : SATA - SAS - SCSI</option>
+						<option value="Solid-State Drive">Solid-State Drive : SATA - NVMe</option>
+						<option value="Optical Drive">Optical Drive : CD - DVD</option>
+						<option value="Tape Drive">Tape Drive : LTO - FloppyDisk - ZIP Disk</option>
+						<option value="Optical Drive">Others : USB - SD/microSD - CF - RDX</option>
+					</select>
+				</div>
+				<div class="form-example">
+					<label>Data amount estimation to recover (in Gb) </label>
+					<input type="number" id="amount" placeholder="Data amount" min="10" max="16000">
+				</div>
+				<div class="form-example">
+					<label>Country of residence: </label>
+					<select id="country_list">
+						<option value="France">France</option>
+						<option value="United-Kingdom">United-Kingdom</option>
+						<option value="Germany">Germany</option>
+						<option value="Spain">Spain</option>
+					</select>
+				</div>
+				<div class="form-example">
+					<label>Choose a priority:</label>
+					<select id="plan_list">
+						<option value="Basic">Basic : Low Priority (20€ per Tb)</option>
+						<option value="Express">Express : Medium Priority (32.5€ per Tb)</option>
+						<option value="Crucial">Crucial : High Priority (50€ per Tb)</option>
+					</select>
+				</div>
+				<div class="form-submit">
+					<input class="button_form" type="submit" value="Submit" onclick="saveFile()">
+				</div>
+			</form>
+			<div id="server_div">
+				<img id="server_img" src="../img/hdd.jpg" alt="A hard-disk drive">
+			</div>
+		</div>
+		<script>
+			let saveFile = () => {
+				const company_name = document.getElementById("company_name");
+				const name = document.getElementById("name");
+				const adress = document.getElementById("adress");
+				const email = document.getElementById("email");
+				const country = document.getElementById("country_list");
+				const devices = document.getElementById("devices");
+				const amount = document.getElementById("amount");
+				const plan = document.getElementById("plan_list");
+				const random_id = "Recovery" + '-' + Math.floor(Math.random() * 999) + '-' + Math.floor(Math.random() * 99999);
+				const form_id = "2021" + '-' + Math.floor(Math.random() * 9999) + '-' + Math.floor(Math.random() * 9999) + '-' + Math.floor(Math.random() * 9999);
+				let data ='Form ID: ' + random_id + '\n' +'Order ID: ' + form_id + '\n' +'Company Name: ' + company_name.value + '\n' +'Name: ' + name.value + '\n' +'Adress: ' + adress.value + '\n' +'Email adress: ' + email.value + '\n' +'Country: ' + country.value + '\n' +'Type of devices : ' + devices.value + '\n' +'Data quantity (in Gb) : ' + amount.value + '\n' +'Priority: ' + plan.value;
+				const textToBLOB = new Blob([data], {
+					 type: 'text/plain'
+				});
+				const sFileName = 'RecoveryForm.txt';
+				let newLink = document.createElement("a");
+				newLink.download = sFileName;
+				if (window.webkitURL != null) {
+					newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+				}
+				else {
+					newLink.href = window.URL.createObjectURL(textToBLOB);
+					newLink.style.display = "none";
+					document.body.appendChild(newLink);
+				}
+				newLink.click();
+				if (plan.value == 'Basic') {
+					console.log("Basic");
+				}
+				if (plan.value == 'Express') {
+					console.log("Express");
+				}
+				if (plan.value == 'Crucial') {
+					console.log("Crucial");
+				}
+			}
+		</script>
+		<footer class="footer">
+			<ul>
+				<li><a href="../index.html">Home</a></li>
+			</ul>
+			<ul>
+				<li><a href="https://harfang.net">Harfang</a></li>
+			</ul>
+			<ul>
+				<li><a href="https://github.com/HadPhazz">Github</a></li>
+			</ul>
+			<ul>
+				<li><a href="mailto:Hadrien.paris@icloud.com">Contact</a></li>
+			</ul>
+		</footer>
+	</body>
+</html>
